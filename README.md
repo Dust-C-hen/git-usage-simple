@@ -2,6 +2,27 @@
 
 假设你现在想把电脑上的一个项目上传到 GitHub。
 
+## 代理网络问题解决方案
+配置代理（如果你开了“梯子”/加速器）
+
+如果正在使用 VPN、加速器或代理软件来访问 GitHub，Git 它是不会自动使用你的代理的，你需要手动告诉它端口号。
+
+查看你的代理端口：
+
+打开你的代理软件设置，找到 “本地监听端口” 或 “HTTP/S 代理端口”。
+
+假设端口号是 7890（Clash 常见端口）或者 10809（v2ray 常见端口）。
+
+设置 Git 代理（把 7890 换成你实际的端口号）：
+
+
+```
+git config --global http.proxy http://127.0.0.1:7890
+git config --global https.proxy http://127.0.0.1:7890
+```
+
+再次尝试 `git push`。
+
 ## 在 GitHub 上建立仓库 (Create Repository)
    
 1. 登录 GitHub，点击右上角的 + 号，选择 New repository。
