@@ -34,6 +34,7 @@ git push -u origin main                  # 推送到远程 GitHub
 
 ```
 git init
+git branch -M main
 git remote add origin <你的仓库地址URL>
 git add .
 git commit -m "初始化项目"
