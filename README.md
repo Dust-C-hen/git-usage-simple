@@ -19,6 +19,7 @@
     - [合并代码 (Pull Request / PR)](#合并代码-pull-request--pr)
   - [.gitignore](#gitignore)
   - [误删文件处理](#误删文件处理)
+  - [清除git历史以缩小仓库大小](#清除git历史以缩小仓库大小)
 
 ## 代理网络问题解决方案
 配置代理（如果你开了“梯子”/加速器）
@@ -34,7 +35,7 @@
 设置 Git 代理（把 7890 换成你实际的端口号）：
 
 
-```
+```Bash
 git config --global http.proxy http://127.0.0.1:7890
 git config --global https.proxy http://127.0.0.1:7890
 ```
@@ -59,7 +60,7 @@ git config --global https.proxy http://127.0.0.1:7890
 
 ### 情况 A：是一个全新的空文件夹
 
-```
+```Bash
 echo "# my-first-project" >> README.md   # 创建一个说明文件
 git init                                 # 初始化 Git 仓库（建立时光机）
 git add .                                # 把所有文件放入“暂存区”
@@ -71,7 +72,7 @@ git push -u origin main                  # 推送到远程 GitHub
 
 ### 情况 B：已经有代码了(更常用，本地写完README.md后上传)
 
-```
+```Bash
 git init
 git branch -M main
 git remote add origin <你的仓库地址URL>
@@ -83,7 +84,7 @@ git push -u origin main
 ## 后续修改
 
 ### 常规修改
-```
+```Bash
 git add .  # 添加所有修改过的文件
 git commit -m "修复了登录页面的bug"  # 引号内写清楚你干了什么
 git push
@@ -99,13 +100,13 @@ git push
 ## 分支 (Branch) 的使用
 
 ### 创建并切换到新分支
-```
+```Bash
 git checkout -b feature-login  # 创建一个叫 feature-login 的分支
 ```
 在这个分支上随意修改、提交 (add, commit)，这完全不会影响 main 分支的代码。
 
 ### 切回主分支
-```
+```Bash
 git checkout main
 ```
 
@@ -171,7 +172,7 @@ git checkout main
 如果你想用命令行只把那一个文件“拉”回到现在的目录里：
 
 1. 查看历史，找到文件还存在时的 Commit ID：
-```
+```Bash
 git log
 ```
 - 按 `Enter` 向下翻，找到删除操作之前的那次提交。
@@ -181,13 +182,13 @@ git log
 - 按 q 退出查看。
 
 2. 把那个文件“传送”回来： 命令格式：`git checkout [旧版本ID] -- [文件路径]`
-```
+```Bash
 git checkout a1b2c3d -- 学习笔记_latex版/note_main.tex
 ```
 (如果不记得具体路径，可以先打一部分然后按 Tab 键尝试补全，或者直接去文件夹里看)
 
 3. 检查并提交： 此时文件已经回到你的文件夹了。
-```
+```Bash
 git status  # 你会看到文件被列为 "new file"
 git commit -m "找回误删的文件"
 git push
@@ -199,12 +200,12 @@ git push
 1. 找到“执行删除”的那次 Commit ID： 假设 ID 是 `e5f6g7h`。
 
 2. 执行撤销命令：
-```
+```Bash
 git revert e5f6g7h
 ```
 - Git 会自动生成一个新的提交，内容正好和“删除”相反（也就是把文件加回来）。
 3. 推送：
-```
+```Bash
 git push
 ```
 
@@ -213,3 +214,16 @@ git push
 永远记住：在 Git 里，只要你曾经提交过（Commit），就几乎不可能彻底弄丢文件。 所谓的“删除”，只是在最新的版本里把它隐藏了，旧版本里它永远都在。
 
 下一步建议： 如果你在执行 `git checkout` 时不知道文件的准确路径（比如是在子文件夹里），可以在终端输入 `git ls-tree -r [旧版本ID] --name-only` 来列出那个版本下的所有文件路径。
+
+## 清除git历史以缩小仓库大小
+``` Bash
+# 1. 删除 .git 文件夹 (这会删除所有版本历史！)
+rm -rf .git  # Windows PowerShell 用: rm -r -force .git
+
+# 2. 重新初始化
+git init
+
+# 3. 重新添加文件 (此时你的新 .gitignore 会生效)
+git add .
+git commit -m "Initial commit with clean history"
+```
