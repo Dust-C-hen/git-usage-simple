@@ -216,6 +216,7 @@ git push
 下一步建议： 如果你在执行 `git checkout` 时不知道文件的准确路径（比如是在子文件夹里），可以在终端输入 `git ls-tree -r [旧版本ID] --name-only` 来列出那个版本下的所有文件路径。
 
 ## 清除git历史以缩小仓库大小
+非必要不建议使用，相当于新建仓库了
 ``` Bash
 # 1. 删除 .git 文件夹 (这会删除所有版本历史！)
 rm -rf .git  # Windows PowerShell 用: rm -r -force .git
